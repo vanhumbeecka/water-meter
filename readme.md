@@ -1,5 +1,9 @@
 # Water meter parser
 
+## Architecture
+
+![Architecture](architecture.jpg)
+
 ## Local development
 
 Install dependencies
