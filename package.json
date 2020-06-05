@@ -1,0 +1,33 @@
+{
+  "name": "google-vision",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "start": "ts-node ./src/index.ts",
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
+    "test": "mocha --require ts-node/register './test/**/*.spec.ts'",
+    "script": "ts-node ./src/scripts/run-vision.ts",
+    "deploy": "npm run build && sls deploy"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@types/node-fetch": "^2.5.7",
+    "chai": "^4.2.0",
+    "mocha": "^7.2.0",
+    "serverless": "^1.71.3",
+    "serverless-google-cloudfunctions": "^3.1.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^5.0.1",
+    "@google-cloud/vision": "^1.11.0",
+    "moment": "2.24.0",
+    "node-fetch": "^2.6.0"
+  }
+}

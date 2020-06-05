@@ -1,0 +1,43 @@
+service: water-meter-parser
+
+provider:
+  name: google
+  stage: dev
+  runtime: nodejs10
+  region: europe-west1
+  project: water-vision
+  # The GCF credentials can be a little tricky to set up. Luckily we've documented this for you here:
+  # https://serverless.com/framework/docs/providers/google/guide/credentials/
+  #
+  # the path to the credentials file needs to be absolute
+  credentials: /Users/andries/.gcloud/water-vision-owner.json
+  environments:
+    WEBHOOK_URL: ${env:WEBHOOK_URL}
+
+plugins:
+  - serverless-google-cloudfunctions
+
+package:
+  exclude:
+    - data/**
+    - node_modules/**
+    - src/**
+    - .idea/
+    - .gitignore
+    - .git/**
+    - .env
+    - .env.example
+  include:
+    - package.json
+    - package-lock.json
+    - dist/**
+
+functions:
+  parsePhoto:
+    handler: mainHandler
+    events:
+      - event:
+          eventType: google.storage.object.finalize
+          resource: projects/${self:provider.project}/buckets/water-meter
+
+
