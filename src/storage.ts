@@ -1,6 +1,6 @@
 import { Storage } from "@google-cloud/storage"
 
-export const bucketName = "water-meter";
+export const bucketName = process.env.STORAGE_BUCKET || "water-meter";
 const client = new Storage();
 
 

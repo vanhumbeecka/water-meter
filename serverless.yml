@@ -13,6 +13,7 @@ provider:
   credentials: /Users/andries/.gcloud/water-vision-owner.json
   environments:
     WEBHOOK_URL: ${env:WEBHOOK_URL}
+    STORAGE_BUCKET: water-meter
 
 plugins:
   - serverless-google-cloudfunctions
