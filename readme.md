@@ -1,5 +1,7 @@
 # Water meter parser
 
+Check out the [accompanying blogpost](https://codemine.be/posts/20200530-analog-to-digital-part-1/) of this repository.
+
 ## Architecture
 
 ![Architecture](architecture.jpg)
