@@ -1,0 +1,268 @@
+[
+  {
+    "id": "a357dff9.3ece6",
+    "type": "tab",
+    "label": "Flow 1",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "b84332c4.0165e",
+    "type": "google-cloud-gcs-write",
+    "z": "a357dff9.3ece6",
+    "account": "",
+    "keyFilename": "",
+    "filename": "gs://water-meter/water-meter.jpg",
+    "contentType": "image/jpeg",
+    "name": "",
+    "x": 620,
+    "y": 600,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "f8d32ba6.4ce498",
+    "type": "camerapi-takephoto",
+    "z": "a357dff9.3ece6",
+    "filemode": "0",
+    "filename": "watermeter.jpg",
+    "filedefpath": "1",
+    "filepath": "",
+    "fileformat": "jpeg",
+    "resolution": "9",
+    "rotation": "0",
+    "fliph": "0",
+    "flipv": "0",
+    "brightness": "50",
+    "contrast": "50",
+    "sharpness": "100",
+    "quality": "100",
+    "imageeffect": "none",
+    "exposuremode": "auto",
+    "iso": "0",
+    "agcwait": "1.0",
+    "led": "1",
+    "awb": "auto",
+    "name": "",
+    "x": 700,
+    "y": 300,
+    "wires": [
+      [
+        "6d66dd6c.e796d4",
+        "d7b49769.b2ad38"
+      ]
+    ]
+  },
+  {
+    "id": "36454be5.2a9e34",
+    "type": "debug",
+    "z": "a357dff9.3ece6",
+    "name": "photo output",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "x": 630,
+    "y": 640,
+    "wires": []
+  },
+  {
+    "id": "6d66dd6c.e796d4",
+    "type": "change",
+    "z": "a357dff9.3ece6",
+    "name": "convert message for gcs",
+    "rules": [
+      {
+        "t": "delete",
+        "p": "filename",
+        "pt": "msg"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 390,
+    "y": 580,
+    "wires": [
+      [
+        "b84332c4.0165e",
+        "36454be5.2a9e34"
+      ]
+    ]
+  },
+  {
+    "id": "40d9d359.07e11c",
+    "type": "inject",
+    "z": "a357dff9.3ece6",
+    "name": "On",
+    "topic": "",
+    "payload": "{\"on\":true}",
+    "payloadType": "json",
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 90,
+    "y": 300,
+    "wires": [
+      [
+        "b9edfe30.29c6a"
+      ]
+    ]
+  },
+  {
+    "id": "b9edfe30.29c6a",
+    "type": "hue-light",
+    "z": "a357dff9.3ece6",
+    "name": "Hue ambiance lamp 3",
+    "bridge": "5501afe2.49889",
+    "lightid": "3",
+    "colornamer": false,
+    "skipevents": false,
+    "x": 320,
+    "y": 300,
+    "wires": [
+      [
+        "c28ccae0.410a38"
+      ]
+    ]
+  },
+  {
+    "id": "c28ccae0.410a38",
+    "type": "switch",
+    "z": "a357dff9.3ece6",
+    "name": "If light is on",
+    "property": "payload.on",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "true",
+        "vt": "jsonata"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 1,
+    "x": 510,
+    "y": 300,
+    "wires": [
+      [
+        "f8d32ba6.4ce498",
+        "5272fe79.53aa1"
+      ]
+    ]
+  },
+  {
+    "id": "5272fe79.53aa1",
+    "type": "debug",
+    "z": "a357dff9.3ece6",
+    "name": "Light status",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "x": 690,
+    "y": 240,
+    "wires": []
+  },
+  {
+    "id": "d7b49769.b2ad38",
+    "type": "change",
+    "z": "a357dff9.3ece6",
+    "name": "Set lamp off message",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "{\"on\":false}",
+        "tot": "json"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 380,
+    "y": 520,
+    "wires": [
+      [
+        "f18b3506.9b64c8"
+      ]
+    ]
+  },
+  {
+    "id": "f18b3506.9b64c8",
+    "type": "hue-light",
+    "z": "a357dff9.3ece6",
+    "name": "Hue ambiance lamp 3",
+    "bridge": "5501afe2.49889",
+    "lightid": "3",
+    "colornamer": false,
+    "skipevents": false,
+    "x": 660,
+    "y": 520,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "292b9afd.caa156",
+    "type": "inject",
+    "z": "a357dff9.3ece6",
+    "name": "Off",
+    "topic": "",
+    "payload": "{\"on\":false}",
+    "payloadType": "json",
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 90,
+    "y": 260,
+    "wires": [
+      [
+        "b9edfe30.29c6a"
+      ]
+    ]
+  },
+  {
+    "id": "c107c9b.a16ea38",
+    "type": "inject",
+    "z": "a357dff9.3ece6",
+    "name": "Every 24h",
+    "topic": "",
+    "payload": "{\"on\":true}",
+    "payloadType": "json",
+    "repeat": "86400",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 110,
+    "y": 380,
+    "wires": [
+      [
+        "b9edfe30.29c6a"
+      ]
+    ]
+  },
+  {
+    "id": "5501afe2.49889",
+    "type": "hue-bridge",
+    "z": "",
+    "name": "Philips Bridge",
+    "bridge": "192.168.0.250",
+    "key": "",
+    "interval": "3000",
+    "disableupdates": false
+  }
+]
