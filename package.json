@@ -27,7 +27,7 @@
   "dependencies": {
     "@google-cloud/storage": "^5.0.1",
     "@google-cloud/vision": "^1.11.0",
-    "moment": "2.24.0",
+    "moment": "2.29.4",
     "node-fetch": "^2.6.1"
   }
 }
